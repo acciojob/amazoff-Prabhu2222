@@ -85,7 +85,7 @@ OrderService orderService;
         return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-count-of-orders-left-after-given-time")
+    @GetMapping("/get-count-of-orders-left-after-given-time/{time}/{partnerId}")
     public ResponseEntity<Integer> getOrdersLeftAfterGivenTimeByPartnerId(@PathVariable String time, @PathVariable String partnerId){
 
         Integer countOfOrders = orderService.getOrdersLeftAfterGivenTimeByPartnerId(time,partnerId);
@@ -115,7 +115,6 @@ OrderService orderService;
         //Delete an order and also
         // remove it from the assigned order of that partnerId
         orderService.deleteOrderById(orderId);
-
         return new ResponseEntity<>(orderId + " removed successfully", HttpStatus.CREATED);
     }
 }
