@@ -36,12 +36,8 @@ public class OrderService {
     }
 
     public List<String> getOrdersByPartnerId(String partnerId) {
-        List<Order> list=orderRepository.getOrdersByPartnerId(partnerId);
-        List<String> ans=new ArrayList<>();
-        for(Order ele:list){
-            ans.add(ele.toString());
-        }
-        return ans;
+        return orderRepository.getOrdersByPartnerId(partnerId);
+
     }
 
     public List<String> getAllOrders() {

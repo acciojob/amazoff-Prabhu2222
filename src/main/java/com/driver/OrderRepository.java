@@ -41,21 +41,14 @@ public class OrderRepository {
   }
 
   public Integer getOrderCountByPartnerId(String partnerId) {
-        if(deliveryPartnerDb.containsKey(partnerId)){
             return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
-        }
-        return 0;
-
   }
 
-    public List<Order> getOrdersByPartnerId(String partnerId) {
-      List<Order> list=new ArrayList<>();
-      if(!deliveryPartnerDb.containsKey(partnerId)){
-         return list;
-      }
+    public List<String> getOrdersByPartnerId(String partnerId) {
+      List<String> list=new ArrayList<>();
       for(String orderId:orderPartnerPairDb.keySet()){
         if(orderPartnerPairDb.get(orderId).equals(partnerId)){
-          list.add(orderDb.get(orderId));
+          list.add(orderId);
         }
       }
       return list;
@@ -64,7 +57,7 @@ public class OrderRepository {
   public List<String> getAllOrders() {
       List<String> list=new ArrayList<>();
       for(String ele:orderDb.keySet()){
-         list.add(orderDb.get(ele).toString());
+         list.add(ele);
       }
       return list;
   }
