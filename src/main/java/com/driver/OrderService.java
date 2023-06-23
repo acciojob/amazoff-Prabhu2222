@@ -3,7 +3,6 @@ package com.driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,11 +23,11 @@ public class OrderService {
     }
 
     public Order getOrderById(String orderId) {
-      return  orderRepository.getOrderById(orderId);
+        return orderRepository.getOrderById(orderId);
     }
 
     public DeliveryPartner getPartnerById(String partnerId) {
-      return   orderRepository.getPartnerById(partnerId);
+        return orderRepository.getPartnerById(partnerId);
     }
 
     public Integer getOrderCountByPartnerId(String partnerId) {
@@ -37,7 +36,6 @@ public class OrderService {
 
     public List<String> getOrdersByPartnerId(String partnerId) {
         return orderRepository.getOrdersByPartnerId(partnerId);
-
     }
 
     public List<String> getAllOrders() {
@@ -45,33 +43,25 @@ public class OrderService {
     }
 
     public Integer getCountOfUnassignedOrders() {
-        return orderRepository.getCountOfUnassignedOrders();
+     return orderRepository.getCountOfUnassignedOrders();
     }
 
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
         int timeValue=Integer.parseInt(time.substring(0,2))*60+Integer.parseInt(time.substring(3));
-         return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(timeValue,partnerId);
+       return     orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(timeValue,partnerId);
     }
 
     public String getLastDeliveryTimeByPartnerId(String partnerId) {
-        int time=orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
-        String TIME="";
-        int hr=time/60;
-        if(hr<10){
-            TIME+="0"+hr;
-        }else TIME+=hr;
-
-        TIME+=":";
-        int min=time%60;
-        if(min<10){
-            TIME+="0"+min;
-        }else TIME+=min;
-
-        return TIME;
+        int time=  orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+        String hr=time/60+"";
+        if(hr.length()<2) hr="0"+hr;
+        String min=time%60+"";
+        if(min.length()<2)min="0"+min;
+        return hr+":"+min;
     }
 
     public void deletePartnerById(String partnerId) {
-        orderRepository.deletePartnerById(partnerId);
+         orderRepository.deletePartnerById(partnerId);
     }
 
     public void deleteOrderById(String orderId) {
