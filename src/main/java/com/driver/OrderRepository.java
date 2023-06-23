@@ -23,10 +23,13 @@ public class OrderRepository {
   }
 
     public void addOrderPartnerPair(String orderId, String partnerId) {
-      orderPartnerPairDb.put(orderId,partnerId);
       //incrementing the count of orders corresponding to the partner id
-      DeliveryPartner dp1=deliveryPartnerDb.get(partnerId);
-      dp1.setNumberOfOrders(dp1.getNumberOfOrders()+1);
+        if(orderDb.containsKey(orderId) && deliveryPartnerDb.containsKey(partnerId)){
+            orderPartnerPairDb.put(orderId,partnerId);
+            DeliveryPartner dp1=deliveryPartnerDb.get(partnerId);
+            dp1.setNumberOfOrders(dp1.getNumberOfOrders()+1);
+        }
+
     }
 
   public Order getOrderById(String orderId) {
@@ -38,11 +41,18 @@ public class OrderRepository {
   }
 
   public Integer getOrderCountByPartnerId(String partnerId) {
-      return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
+        if(deliveryPartnerDb.containsKey(partnerId)){
+            return deliveryPartnerDb.get(partnerId).getNumberOfOrders();
+        }
+        return 0;
+
   }
 
     public List<Order> getOrdersByPartnerId(String partnerId) {
       List<Order> list=new ArrayList<>();
+      if(!deliveryPartnerDb.containsKey(partnerId)){
+         return list;
+      }
       for(String orderId:orderPartnerPairDb.keySet()){
         if(orderPartnerPairDb.get(orderId).equals(partnerId)){
           list.add(orderDb.get(orderId));
